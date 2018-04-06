@@ -34,7 +34,7 @@ int FindMedian(vector<int> & arr1, vector<int> &arr2)
 
 	while (toContinue)
 	{
-		int medianPos1,  medianPos2;
+		int medianPos1, medianPos2;
 
 		medianPos1 = FindMedianPos(arr1);
 		medianPos2 = FindMedianPos(arr2);
