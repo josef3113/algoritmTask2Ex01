@@ -62,14 +62,32 @@ int FindMedian(vector<int> & arr1, vector<int> &arr2)
 			  {
 				  arr1.erase(--arr1.end());
 				  arr2.erase(arr2.begin());
-				  if ( arr2.size() == 0)
+				  if (arr1.size() == 0)
 				  {
-					  toContinue = false;
+					  medianPos2 = FindMedianPos(arr2);
+					  return arr2[medianPos2];;
+				  }
+				  if (arr2.size() == 0)
+				  {
+					  medianPos1 = FindMedianPos(arr1);
+					  return arr1[medianPos1];;
 				  }
 			  }
 			  else
 			  {
 				  vector<int>::iterator mid = arr2.begin() +1+ medianPos2 ;
+				  if (medianPos2 == 0)
+				  {
+					  mid = --arr2.end();
+				  }
+				  else
+				  {
+					  if (arr1[0] > arr2[1 + medianPos2])
+					  {
+						  mid = --arr2.end();
+					  }
+
+				  }
 				  arr2.insert(mid, arr1[0]);
 				  toContinue = false;
 				  medianPos2 = FindMedianPos(arr2);
@@ -102,37 +120,52 @@ int FindMedian(vector<int> & arr1, vector<int> &arr2)
 			}
 
 
-
-
-
 			if (toErase == 0)
 			{
-				arr1.erase(arr1.begin());
-				//if (arr2.size() > 1)
-				//{
+				if (arr1.size() == 1 && arr2.size() == 1)
+				{
+					return min(arr1[0], arr2[0]);
+				}
+				if (arr1.size() != 1)
+				{
 					arr2.erase(--arr2.end());
-				//}
-					/*medianPos1 = FindMedianPos(arr1);
-					midianToReturn = arr1[medianPos1];
-					break;*/
-					if ((arr1.size() == 1 && arr2.size() == 1) || arr1.size() == 0 || arr2.size() == 0)
+					arr1.erase(arr1.begin());
+
+					if (arr1.size() == 0 )
 					{
-						toContinue = false;
+						medianPos2 = FindMedianPos(arr2);
+						return arr2[medianPos2];;
 					}
-						
-				
-			}
-			//if (arr1.size() == 1 || arr2.size() == 1)
-			/*if (arr1.size() == 1)
-			{
-				toContinue = false;
-				
-					arr2.erase(--arr2.end());
+					if (arr2.size() == 0)
+					{
+						medianPos1 = FindMedianPos(arr1);
+						return arr1[medianPos1];;
+					}
+				}
+				else
+				{
+					vector<int>::iterator mid = arr2.begin() + (medianPos2 );
+					if (medianPos2 == 0)
+					{
+						mid = arr2.begin();
+					}
+					else
+					{
+						if (arr1[0] < arr2[medianPos2 - 1])
+						{
+							mid = arr2.begin();
+							//mid--;
+
+						}
+
+					}
+					
+					arr2.insert(mid, arr1[0]);
+					toContinue = false;
 					medianPos2 = FindMedianPos(arr2);
-					midianToReturn = arr2[medianPos2];
-				
-			}*/
-			
+					return arr2[medianPos2];
+				}
+			}
 
 		}
 	}
@@ -145,9 +178,9 @@ int FindMedian(vector<int> & arr1, vector<int> &arr2)
 
 void main()
 {
-	vector<int> arr1 =  {-5,3,6,12,15 };
-	vector<int> arr2 = { -12,-10,-6,-3,4,10 };
-	FindMedian(arr1,arr2);
+	vector<int> arr1 = { 5 };// {-5,3,6,12,15 };    //{ 2,3,5,8 };   //
+	vector<int> arr2 = { 1};// { -12,-10,-6,-3,4,10 };  //{ 10,12,14,16,18,20 };  //
+	cout << FindMedian(arr1, arr2) << endl;;
 
 
 }
